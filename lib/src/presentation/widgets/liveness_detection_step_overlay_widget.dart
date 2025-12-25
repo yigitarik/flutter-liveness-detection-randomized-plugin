@@ -201,7 +201,7 @@ class LivenessDetectionStepOverlayWidgetState
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'Back',
+                          'Geri',
                           style: TextStyle(
                               color: widget.isDarkMode
                                   ? Colors.white
@@ -229,7 +229,7 @@ class LivenessDetectionStepOverlayWidgetState
                         )
                       ],
                     )
-                  : Text('Back',
+                  : Text('Geri',
                       style: TextStyle(
                           color:
                               widget.isDarkMode ? Colors.white : Colors.black)),
@@ -306,7 +306,7 @@ class LivenessDetectionStepOverlayWidgetState
         ),
         const SizedBox(width: 16),
         Text(
-          widget.isFaceDetected ? 'User Face Found' : 'User Face Not Found...',
+          widget.isFaceDetected ? 'Kullanıcı yüzü bulundu' : 'Kullanıcı yüzü bulunamadı...',
           style:
               TextStyle(color: widget.isDarkMode ? Colors.white : Colors.black),
         ),

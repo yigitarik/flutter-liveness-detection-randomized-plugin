@@ -134,7 +134,7 @@ class _LivenessDetectionScreenState extends State<LivenessDetectionView> {
       customizedSteps.add(
         LivenessDetectionStepItem(
           step: LivenessDetectionStep.blink,
-          title: label.blink ?? "Blink 2-3 Times",
+          title: label.blink ?? "Gözlerinizi 2-3 kez kırpın",
         ),
       );
     }
@@ -144,7 +144,7 @@ class _LivenessDetectionScreenState extends State<LivenessDetectionView> {
       customizedSteps.add(
         LivenessDetectionStepItem(
           step: LivenessDetectionStep.lookRight,
-          title: label.lookRight ?? "Look RIGHT",
+          title: label.lookRight ?? "Sağa bakın",
         ),
       );
     }
@@ -154,7 +154,7 @@ class _LivenessDetectionScreenState extends State<LivenessDetectionView> {
       customizedSteps.add(
         LivenessDetectionStepItem(
           step: LivenessDetectionStep.lookLeft,
-          title: label.lookLeft ?? "Look LEFT",
+          title: label.lookLeft ?? "Sola bakın",
         ),
       );
     }
@@ -164,7 +164,7 @@ class _LivenessDetectionScreenState extends State<LivenessDetectionView> {
       customizedSteps.add(
         LivenessDetectionStepItem(
           step: LivenessDetectionStep.lookUp,
-          title: label.lookUp ?? "Look UP",
+          title: label.lookUp ?? "Yukarı bakın",
         ),
       );
     }
@@ -174,7 +174,7 @@ class _LivenessDetectionScreenState extends State<LivenessDetectionView> {
       customizedSteps.add(
         LivenessDetectionStepItem(
           step: LivenessDetectionStep.lookDown,
-          title: label.lookDown ?? "Look DOWN",
+          title: label.lookDown ?? "Aşağı bakın",
         ),
       );
     }
@@ -184,7 +184,7 @@ class _LivenessDetectionScreenState extends State<LivenessDetectionView> {
       customizedSteps.add(
         LivenessDetectionStepItem(
           step: LivenessDetectionStep.smile,
-          title: label.smile ?? "Smile",
+          title: label.smile ?? "Gülümseyin",
         ),
       );
     }
@@ -440,8 +440,8 @@ class _LivenessDetectionScreenState extends State<LivenessDetectionView> {
       final snackBar = SnackBar(
         content: Text(
           imgToReturn == null
-              ? 'Verification of liveness detection failed, please try again. (Exceeds time limit ${widget.config.durationLivenessVerify ?? 45} second.)'
-              : 'Verification of liveness detection success!',
+              ? 'Canlılık doğrulama başarısız oldu, lütfen tekrar deneyin. (Süre sınırı ${widget.config.durationLivenessVerify ?? 45} saniye.)'
+              : 'Canlılık doğrulama başarılı!',
         ),
       );
       if (!mounted) return;

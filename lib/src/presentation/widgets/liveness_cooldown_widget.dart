@@ -136,7 +136,7 @@ class _LivenessCooldownWidgetState extends State<LivenessCooldownWidget> with Wi
               ),
               const SizedBox(height: 24),
               Text(
-                'Too Many Failed Attempts',
+                'Çok Fazla Başarısız Deneme',
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
@@ -146,7 +146,7 @@ class _LivenessCooldownWidgetState extends State<LivenessCooldownWidget> with Wi
               ),
               const SizedBox(height: 16),
               Text(
-                'You have failed liveness verification ${widget.maxFailedAttempts} times.\nPlease wait before trying again.',
+                'Canlılık doğrulamasında ${widget.maxFailedAttempts} kez başarısız oldunuz.\nLütfen tekrar denemeden önce bekleyin.',
                 style: TextStyle(
                   fontSize: 16,
                   color: widget.isDarkMode ? Colors.white70 : Colors.black54,
@@ -163,7 +163,7 @@ class _LivenessCooldownWidgetState extends State<LivenessCooldownWidget> with Wi
                 child: Column(
                   children: [
                     Text(
-                      'Remaining Wait Time',
+                      'Kalan Bekleme Süresi',
                       style: TextStyle(
                         fontSize: 14,
                         color: widget.isDarkMode ? Colors.white70 : Colors.black54,
@@ -190,7 +190,7 @@ class _LivenessCooldownWidgetState extends State<LivenessCooldownWidget> with Wi
                   foregroundColor: widget.isDarkMode ? Colors.white : Colors.black,
                   padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
                 ),
-                child: const Text('Back'),
+                child: const Text('Geri'),
               ),
             ],
           ),

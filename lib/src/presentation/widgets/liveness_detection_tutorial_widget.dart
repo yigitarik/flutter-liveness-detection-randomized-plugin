@@ -37,7 +37,7 @@ class _LivenessDetectionTutorialScreenState
               height: 16,
             ),
             Text(
-              'Liveness Detection - Tutorial',
+              'Canlılık Doğrulama - Eğitim',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 24,
@@ -76,13 +76,13 @@ class _LivenessDetectionTutorialScreenState
                               widget.isDarkMode ? Colors.white : Colors.black),
                     ),
                     subtitle: Text(
-                      "Make sure you are in an area that has sufficient lighting and that your ears are not covered by anything",
+                      "Yeterli aydınlatma olan bir ortamda olduğunuzdan ve kulaklarınızın kapalı olmadığından emin olun",
                       style: TextStyle(
                           color:
                               widget.isDarkMode ? Colors.white : Colors.black),
                     ),
                     title: Text(
-                      "Sufficient Lighting",
+                      "Yeterli Aydınlatma",
                       style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
@@ -100,13 +100,13 @@ class _LivenessDetectionTutorialScreenState
                               widget.isDarkMode ? Colors.white : Colors.black),
                     ),
                     subtitle: Text(
-                      "Hold the phone at eye level and look straight at the camera",
+                      "Telefonu göz hizasında tutun ve kameraya düz bakın",
                       style: TextStyle(
                           color:
                               widget.isDarkMode ? Colors.white : Colors.black),
                     ),
                     title: Text(
-                      "Straight Ahead View",
+                      "Düz Bakış",
                       style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
@@ -124,13 +124,13 @@ class _LivenessDetectionTutorialScreenState
                               widget.isDarkMode ? Colors.white : Colors.black),
                     ),
                     subtitle: Text(
-                      "The time limit given for the liveness detection system verification process is ${widget.duration ?? 45} seconds",
+                      "Canlılık doğrulama süreci için verilen süre ${widget.duration ?? 45} saniyedir",
                       style: TextStyle(
                           color:
                               widget.isDarkMode ? Colors.white : Colors.black),
                     ),
                     title: Text(
-                      "Time Limit Verification",
+                      "Süre Sınırı",
                       style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
@@ -157,7 +157,7 @@ class _LivenessDetectionTutorialScreenState
               icon: const Icon(Icons.camera_alt_outlined),
               onPressed: () => widget.onStartTap(),
               label: const Text(
-                "Start the Liveness Detection System",
+                "Canlılık Doğrulamayı Başlat",
               ),
             ),
             const SizedBox(
@@ -176,7 +176,7 @@ class _LivenessDetectionTutorialScreenState
                   width: 10,
                 ),
                 Text(
-                  'Package Version: 1.1.0',
+                  'Paket Sürümü: 1.1.0',
                   style: TextStyle(color: Colors.grey),
                 )
               ],
