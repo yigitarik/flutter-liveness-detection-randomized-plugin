@@ -4,11 +4,12 @@ class LivenessDetectionTutorialScreen extends StatefulWidget {
   final VoidCallback onStartTap;
   final bool isDarkMode;
   final int? duration;
-  const LivenessDetectionTutorialScreen(
-      {super.key,
-      required this.onStartTap,
-      this.isDarkMode = false,
-      required this.duration});
+  const LivenessDetectionTutorialScreen({
+    super.key,
+    required this.onStartTap,
+    this.isDarkMode = false,
+    required this.duration,
+  });
 
   @override
   State<LivenessDetectionTutorialScreen> createState() =>
@@ -33,9 +34,7 @@ class _LivenessDetectionTutorialScreenState
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const Spacer(),
-            const SizedBox(
-              height: 16,
-            ),
+            const SizedBox(height: 16),
             Text(
               'Canlılık Doğrulama - Eğitim',
               style: TextStyle(
@@ -44,9 +43,7 @@ class _LivenessDetectionTutorialScreenState
                 color: widget.isDarkMode ? Colors.white : Colors.black,
               ),
             ),
-            const SizedBox(
-              height: 32,
-            ),
+            const SizedBox(height: 32),
             Container(
               width: MediaQuery.of(context).size.width,
               padding: const EdgeInsets.symmetric(vertical: 16),
@@ -70,117 +67,103 @@ class _LivenessDetectionTutorialScreenState
                     leading: Text(
                       '1',
                       style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color:
-                              widget.isDarkMode ? Colors.white : Colors.black),
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: widget.isDarkMode ? Colors.white : Colors.black,
+                      ),
                     ),
                     subtitle: Text(
                       "Yeterli aydınlatma olan bir ortamda olduğunuzdan ve kulaklarınızın kapalı olmadığından emin olun",
                       style: TextStyle(
-                          color:
-                              widget.isDarkMode ? Colors.white : Colors.black),
+                        color: widget.isDarkMode ? Colors.white : Colors.black,
+                      ),
                     ),
                     title: Text(
                       "Yeterli Aydınlatma",
                       style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color:
-                              widget.isDarkMode ? Colors.white : Colors.black),
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: widget.isDarkMode ? Colors.white : Colors.black,
+                      ),
                     ),
                   ),
                   ListTile(
                     leading: Text(
                       '2',
                       style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color:
-                              widget.isDarkMode ? Colors.white : Colors.black),
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: widget.isDarkMode ? Colors.white : Colors.black,
+                      ),
                     ),
                     subtitle: Text(
                       "Telefonu göz hizasında tutun ve kameraya düz bakın",
                       style: TextStyle(
-                          color:
-                              widget.isDarkMode ? Colors.white : Colors.black),
+                        color: widget.isDarkMode ? Colors.white : Colors.black,
+                      ),
                     ),
                     title: Text(
                       "Düz Bakış",
                       style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color:
-                              widget.isDarkMode ? Colors.white : Colors.black),
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: widget.isDarkMode ? Colors.white : Colors.black,
+                      ),
                     ),
                   ),
                   ListTile(
                     leading: Text(
                       '3',
                       style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color:
-                              widget.isDarkMode ? Colors.white : Colors.black),
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: widget.isDarkMode ? Colors.white : Colors.black,
+                      ),
                     ),
                     subtitle: Text(
                       "Canlılık doğrulama süreci için verilen süre ${widget.duration ?? 45} saniyedir",
                       style: TextStyle(
-                          color:
-                              widget.isDarkMode ? Colors.white : Colors.black),
+                        color: widget.isDarkMode ? Colors.white : Colors.black,
+                      ),
                     ),
                     title: Text(
                       "Süre Sınırı",
                       style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color:
-                              widget.isDarkMode ? Colors.white : Colors.black),
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: widget.isDarkMode ? Colors.white : Colors.black,
+                      ),
                     ),
-                  )
+                  ),
                 ],
               ),
             ),
-            const SizedBox(
-              height: 24,
-            ),
+            const SizedBox(height: 24),
             ElevatedButton.icon(
               style: ElevatedButton.styleFrom(
-                backgroundColor:
-                    widget.isDarkMode ? Colors.black87 : Colors.white,
-                foregroundColor:
-                    widget.isDarkMode ? Colors.white : Colors.black,
+                backgroundColor: widget.isDarkMode
+                    ? Colors.black87
+                    : Colors.white,
+                foregroundColor: widget.isDarkMode
+                    ? Colors.white
+                    : Colors.black,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),
               ),
               icon: const Icon(Icons.camera_alt_outlined),
               onPressed: () => widget.onStartTap(),
-              label: const Text(
-                "Canlılık Doğrulamayı Başlat",
-              ),
+              label: const Text("Canlılık Doğrulamayı Başlat"),
             ),
-            const SizedBox(
-              height: 10,
-            ),
+            const SizedBox(height: 10),
             const Spacer(),
             const Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(
-                  Icons.info_outline_rounded,
-                  color: Colors.grey,
-                  size: 15,
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                Text(
-                  'Paket Sürümü: 1.1.0',
-                  style: TextStyle(color: Colors.grey),
-                )
+                Icon(Icons.info_outline_rounded, color: Colors.grey, size: 15),
+                SizedBox(width: 10),
               ],
-            )
+            ),
           ],
         ),
       ),
