@@ -11,10 +11,7 @@ List<CameraDescription> availableCams = [];
 class LivenessDetectionView extends StatefulWidget {
   final LivenessDetectionConfig config;
 
-  const LivenessDetectionView({
-    super.key,
-    required this.config,
-  });
+  const LivenessDetectionView({super.key, required this.config});
 
   @override
   State<LivenessDetectionView> createState() => _LivenessDetectionScreenState();
@@ -183,7 +180,7 @@ class _LivenessDetectionScreenState extends State<LivenessDetectionView> {
     _timerToDetectFace?.cancel();
     _timerToDetectFace = null;
     _cameraController?.dispose();
-    
+
     if (widget.config.isEnableMaxBrightness) {
       resetApplicationBrightness();
     }
@@ -192,10 +189,10 @@ class _LivenessDetectionScreenState extends State<LivenessDetectionView> {
 
   void _preInitCallBack() {
     _isInfoStepCompleted = !widget.config.startWithInfoScreen;
-    
+
     // Initialize and shuffle steps fresh each time
     _initializeShuffledSteps();
-    
+
     if (widget.config.isEnableMaxBrightness) {
       setApplicationBrightness(1.0);
     }
@@ -250,45 +247,43 @@ class _LivenessDetectionScreenState extends State<LivenessDetectionView> {
 
   Future<void> _switchCamera() async {
     if (availableCams.length < 2) return; // En az 2 kamera olmalı
-    
+
     // Mevcut kamera yönünü al
     final currentCamera = availableCams[_cameraIndex];
     final currentDirection = currentCamera.lensDirection;
-    
+
     // Diğer yöndeki kamerayı bul
-    CameraLensDirection targetDirection = currentDirection == CameraLensDirection.front
+    CameraLensDirection targetDirection =
+        currentDirection == CameraLensDirection.front
         ? CameraLensDirection.back
         : CameraLensDirection.front;
-    
+
     final targetCameraIndex = availableCams.indexWhere(
       (camera) => camera.lensDirection == targetDirection,
     );
-    
+
     if (targetCameraIndex == -1) return; // Hedef kamera bulunamadı
-    
+
     // Eski kamerayı durdur
     await _cameraController?.stopImageStream();
     await _cameraController?.dispose();
-    
+
     // Timer'ı iptal et ve yeniden başlat
     _timerToDetectFace?.cancel();
-    
+
     // Yüz algılama durumunu sıfırla
     if (mounted) {
       setState(() {
         _faceDetectedState = false;
       });
     }
-    
-    // Yeni kamera index'ini ayarla
-    _cameraIndex = targetCameraIndex;
-    
-    // Kamera yönü değiştiği için adımları yeniden oluştur
-    _initializeShuffledSteps();
-    
+
     // Adımları sıfırla
     _resetSteps();
-    
+
+    // Yeni kamera index'ini ayarla
+    _cameraIndex = targetCameraIndex;
+
     // Yeni kamerayı başlat
     _startLiveFeed();
   }
@@ -364,12 +359,7 @@ class _LivenessDetectionScreenState extends State<LivenessDetectionView> {
         final currentIndex = _stepsKey.currentState?.currentIndex ?? 0;
         List<LivenessDetectionStepItem> currentSteps = _getStepsToUse();
         if (currentIndex < currentSteps.length) {
-          // _getStepsToUse zaten arka kamera için adımları tersine çeviriyor
-          // Bu yüzden doğrudan step'i kullanabiliriz
-          _detectFace(
-            face: faces.first,
-            step: currentSteps[currentIndex].step,
-          );
+          _detectFace(face: faces.first, step: currentSteps[currentIndex].step);
         }
       }
     } else {
@@ -472,18 +462,18 @@ class _LivenessDetectionScreenState extends State<LivenessDetectionView> {
 
   void _resetSteps() {
     List<LivenessDetectionStepItem> currentSteps = _getStepsToUse();
-    
+
     for (var step in currentSteps) {
       final index = currentSteps.indexWhere((p1) => p1.step == step.step);
       if (index != -1) {
         currentSteps[index] = currentSteps[index].copyWith();
       }
     }
-    
+
     if (_stepsKey.currentState?.currentIndex != 0) {
       _stepsKey.currentState?.reset();
     }
-    
+
     if (mounted) setState(() {});
   }
 
@@ -500,54 +490,29 @@ class _LivenessDetectionScreenState extends State<LivenessDetectionView> {
   /// Initialize and shuffle steps fresh each time
   void _initializeShuffledSteps() {
     List<LivenessDetectionStepItem> baseSteps;
-    
-    if (widget.config.useCustomizedLabel && widget.config.customizedLabel != null) {
+
+    if (widget.config.useCustomizedLabel &&
+        widget.config.customizedLabel != null) {
       baseSteps = customizedLivenessLabel(widget.config.customizedLabel!);
     } else {
-      baseSteps = List.from(stepLiveness); // Create a copy to avoid modifying the original
+      baseSteps = List.from(
+        stepLiveness,
+      ); // Create a copy to avoid modifying the original
     }
-    
+
     shuffleListLivenessChallenge(
       list: baseSteps,
       isSmileLast: widget.config.useCustomizedLabel
           ? false
           : widget.config.shuffleListWithSmileLast,
     );
-    
+
     _shuffledSteps = baseSteps;
-  }
-
-  /// Helper method to check if back camera is being used
-  bool _isBackCamera() {
-    if (_cameraIndex >= availableCams.length) return false;
-    return availableCams[_cameraIndex].lensDirection == CameraLensDirection.back;
-  }
-
-  /// Helper method to adjust steps based on camera direction
-  /// Arka kamera kullanıldığında: Gösterilen metin aynı kalır ama algılanacak yön tersine çevrilir
-  /// Örnek: Arka kamerada "Sağa bakın" gösterirken, kullanıcı kendi sağına bakacak (bizim solumuza)
-  /// Bu yüzden lookLeft algılamamız gerekiyor
-  List<LivenessDetectionStepItem> _adjustStepsForCamera(List<LivenessDetectionStepItem> steps) {
-    if (!_isBackCamera()) return steps;
-    
-    // Arka kamera için: Gösterilen metin aynı kalır ama algılanacak step tersine çevrilir
-    return steps.map((stepItem) {
-      if (stepItem.step == LivenessDetectionStep.lookRight) {
-        // "Sağa bakın" gösteriyoruz ama kullanıcı kendi sağına bakacak (bizim solumuza)
-        // Bu yüzden lookLeft algılamamız gerekiyor
-        return stepItem.copyWith(step: LivenessDetectionStep.lookLeft);
-      } else if (stepItem.step == LivenessDetectionStep.lookLeft) {
-        // "Sola bakın" gösteriyoruz ama kullanıcı kendi soluna bakacak (bizim sağımıza)
-        // Bu yüzden lookRight algılamamız gerekiyor
-        return stepItem.copyWith(step: LivenessDetectionStep.lookRight);
-      }
-      return stepItem;
-    }).toList();
   }
 
   /// Helper method to get the shuffled steps list
   List<LivenessDetectionStepItem> _getStepsToUse() {
-    return _adjustStepsForCamera(_shuffledSteps);
+    return _shuffledSteps;
   }
 
   @override
