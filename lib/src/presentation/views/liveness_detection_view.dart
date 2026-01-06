@@ -359,7 +359,19 @@ class _LivenessDetectionScreenState extends State<LivenessDetectionView> {
         final currentIndex = _stepsKey.currentState?.currentIndex ?? 0;
         List<LivenessDetectionStepItem> currentSteps = _getStepsToUse();
         if (currentIndex < currentSteps.length) {
-          _detectFace(face: faces.first, step: currentSteps[currentIndex].step);
+          LivenessDetectionStep stepToDetect = currentSteps[currentIndex].step;
+          
+          // Arka kamera kullanılıyorsa sağ/sol tersine çevir
+          if (_cameraIndex < availableCams.length &&
+              availableCams[_cameraIndex].lensDirection == CameraLensDirection.back) {
+            if (stepToDetect == LivenessDetectionStep.lookRight) {
+              stepToDetect = LivenessDetectionStep.lookLeft;
+            } else if (stepToDetect == LivenessDetectionStep.lookLeft) {
+              stepToDetect = LivenessDetectionStep.lookRight;
+            }
+          }
+          
+          _detectFace(face: faces.first, step: stepToDetect);
         }
       }
     } else {
