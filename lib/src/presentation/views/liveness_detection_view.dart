@@ -278,11 +278,11 @@ class _LivenessDetectionScreenState extends State<LivenessDetectionView> {
       });
     }
 
-    // Adımları sıfırla
-    _resetSteps();
-
     // Yeni kamera index'ini ayarla
     _cameraIndex = targetCameraIndex;
+
+    // Adımları sıfırla (kamera yönü değiştiği için metinler güncellenecek)
+    _resetSteps();
 
     // Yeni kamerayı başlat
     _startLiveFeed();
@@ -511,7 +511,21 @@ class _LivenessDetectionScreenState extends State<LivenessDetectionView> {
   }
 
   /// Helper method to get the shuffled steps list
+  /// Arka kamera kullanıldığında sağ/sol metinlerini tersine çevir
   List<LivenessDetectionStepItem> _getStepsToUse() {
+    // Arka kamera kontrolü
+    if (_cameraIndex < availableCams.length &&
+        availableCams[_cameraIndex].lensDirection == CameraLensDirection.back) {
+      // Arka kamera için sağ/sol metinlerini tersine çevir
+      return _shuffledSteps.map((step) {
+        if (step.step == LivenessDetectionStep.lookRight) {
+          return step.copyWith(title: "Sola bakın");
+        } else if (step.step == LivenessDetectionStep.lookLeft) {
+          return step.copyWith(title: "Sağa bakın");
+        }
+        return step;
+      }).toList();
+    }
     return _shuffledSteps;
   }
 
