@@ -276,6 +276,48 @@ class _LivenessDetectionScreenState extends State<LivenessDetectionView> {
     _startFaceDetectionTimer();
   }
 
+  Future<void> _switchCamera() async {
+    if (availableCams.length < 2) return; // En az 2 kamera olmalı
+    
+    // Mevcut kamera yönünü al
+    final currentCamera = availableCams[_cameraIndex];
+    final currentDirection = currentCamera.lensDirection;
+    
+    // Diğer yöndeki kamerayı bul
+    CameraLensDirection targetDirection = currentDirection == CameraLensDirection.front
+        ? CameraLensDirection.back
+        : CameraLensDirection.front;
+    
+    final targetCameraIndex = availableCams.indexWhere(
+      (camera) => camera.lensDirection == targetDirection,
+    );
+    
+    if (targetCameraIndex == -1) return; // Hedef kamera bulunamadı
+    
+    // Eski kamerayı durdur
+    await _cameraController?.stopImageStream();
+    await _cameraController?.dispose();
+    
+    // Timer'ı iptal et ve yeniden başlat
+    _timerToDetectFace?.cancel();
+    
+    // Yüz algılama durumunu sıfırla
+    if (mounted) {
+      setState(() {
+        _faceDetectedState = false;
+      });
+    }
+    
+    // Adımları sıfırla
+    _resetSteps();
+    
+    // Yeni kamera index'ini ayarla
+    _cameraIndex = targetCameraIndex;
+    
+    // Yeni kamerayı başlat
+    _startLiveFeed();
+  }
+
   void _startFaceDetectionTimer() {
     _timerToDetectFace = Timer(
       Duration(seconds: widget.config.durationLivenessVerify ?? 45),
@@ -555,6 +597,7 @@ class _LivenessDetectionScreenState extends State<LivenessDetectionView> {
             const Duration(milliseconds: 500),
             () => _takePicture(),
           ),
+          onSwitchCamera: _switchCamera,
         ),
       ],
     );

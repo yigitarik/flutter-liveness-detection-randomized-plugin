@@ -13,6 +13,7 @@ class LivenessDetectionStepOverlayWidget extends StatefulWidget {
   final bool isDarkMode;
   final bool showDurationUiText;
   final int? duration;
+  final VoidCallback? onSwitchCamera;
 
   const LivenessDetectionStepOverlayWidget({
     super.key,
@@ -25,6 +26,7 @@ class LivenessDetectionStepOverlayWidget extends StatefulWidget {
     this.isDarkMode = true,
     this.showDurationUiText = false,
     this.duration,
+    this.onSwitchCamera,
   });
 
   @override
@@ -112,9 +114,7 @@ class LivenessDetectionStepOverlayWidgetState
       maxStep: _indicatorMaxStep,
       child: Transform.scale(
         scale: scale,
-        child: Center(
-          child: widget.camera,
-        ),
+        child: Center(child: widget.camera),
       ),
     );
   }
@@ -194,18 +194,25 @@ class LivenessDetectionStepOverlayWidgetState
         color: Colors.transparent,
         child: Stack(
           children: [
-            GestureDetector(
-              onTap: () => Navigator.pop(context),
+            // Top bar with back button, timer, step counter, and camera switch
+            Positioned(
+              top: 0,
+              left: 0,
+              right: 0,
               child: widget.showCurrentStep
                   ? Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          'Geri',
-                          style: TextStyle(
+                        GestureDetector(
+                          onTap: () => Navigator.pop(context),
+                          child: Text(
+                            'Geri',
+                            style: TextStyle(
                               color: widget.isDarkMode
                                   ? Colors.white
-                                  : Colors.black),
+                                  : Colors.black,
+                            ),
+                          ),
                         ),
                         Visibility(
                           replacement: const SizedBox.shrink(),
@@ -220,19 +227,58 @@ class LivenessDetectionStepOverlayWidgetState
                             ),
                           ),
                         ),
-                        Text(
-                          stepCounter,
-                          style: TextStyle(
-                              color: widget.isDarkMode
-                                  ? Colors.white
-                                  : Colors.black),
-                        )
+                        Row(
+                          children: [
+                            if (widget.onSwitchCamera != null)
+                              IconButton(
+                                icon: Icon(
+                                  Icons.flip_camera_ios,
+                                  color: widget.isDarkMode
+                                      ? Colors.white
+                                      : Colors.black,
+                                ),
+                                onPressed: widget.onSwitchCamera,
+                                tooltip: 'Kamerayı Çevir',
+                              ),
+                            Text(
+                              stepCounter,
+                              style: TextStyle(
+                                color: widget.isDarkMode
+                                    ? Colors.white
+                                    : Colors.black,
+                              ),
+                            ),
+                          ],
+                        ),
                       ],
                     )
-                  : Text('Geri',
-                      style: TextStyle(
-                          color:
-                              widget.isDarkMode ? Colors.white : Colors.black)),
+                  : Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        GestureDetector(
+                          onTap: () => Navigator.pop(context),
+                          child: Text(
+                            'Geri',
+                            style: TextStyle(
+                              color: widget.isDarkMode
+                                  ? Colors.white
+                                  : Colors.black,
+                            ),
+                          ),
+                        ),
+                        if (widget.onSwitchCamera != null)
+                          IconButton(
+                            icon: Icon(
+                              Icons.flip_camera_ios,
+                              color: widget.isDarkMode
+                                  ? Colors.white
+                                  : Colors.black,
+                            ),
+                            onPressed: widget.onSwitchCamera,
+                            tooltip: 'Kamerayı Çevir',
+                          ),
+                      ],
+                    ),
             ),
             _buildBody(),
           ],
@@ -294,21 +340,26 @@ class LivenessDetectionStepOverlayWidgetState
                 )
               : ColorFiltered(
                   colorFilter: ColorFilter.mode(
-                      widget.isFaceDetected ? Colors.green : Colors.black,
-                      BlendMode.modulate),
+                    widget.isFaceDetected ? Colors.green : Colors.black,
+                    BlendMode.modulate,
+                  ),
                   child: LottieBuilder.asset(
                     widget.isFaceDetected
                         ? 'packages/flutter_liveness_detection_randomized_plugin/src/core/assets/face-detected.json'
                         : 'packages/flutter_liveness_detection_randomized_plugin/src/core/assets/face-id-anim.json',
                     height: widget.isFaceDetected ? 32 : 22,
                     width: widget.isFaceDetected ? 32 : 22,
-                  )),
+                  ),
+                ),
         ),
         const SizedBox(width: 16),
         Text(
-          widget.isFaceDetected ? 'Kullanıcı yüzü bulundu' : 'Kullanıcı yüzü bulunamadı...',
-          style:
-              TextStyle(color: widget.isDarkMode ? Colors.white : Colors.black),
+          widget.isFaceDetected
+              ? 'Kullanıcı yüzü bulundu'
+              : 'Kullanıcı yüzü bulunamadı...',
+          style: TextStyle(
+            color: widget.isDarkMode ? Colors.white : Colors.black,
+          ),
         ),
       ],
     );
