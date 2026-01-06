@@ -70,6 +70,15 @@ class LivenessDetectionStepOverlayWidgetState
     debugPrint('showCurrentStep ${widget.showCurrentStep}');
   }
 
+  @override
+  void didUpdateWidget(LivenessDetectionStepOverlayWidget oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    // Kamera yönü değiştiğinde widget'ı güncelle
+    if (oldWidget.isBackCamera != widget.isBackCamera) {
+      setState(() {});
+    }
+  }
+
   void _initializeControllers() {
     _pageController = PageController(initialPage: 0);
     _circularProgressWidget = _buildCircularIndicator();
@@ -335,17 +344,16 @@ class LivenessDetectionStepOverlayWidgetState
   }
 
   String _getStepTitle(LivenessDetectionStepItem stepItem) {
-    if (!widget.isBackCamera) {
-      return stepItem.title;
-    }
-
     // Arka kamera için sağ/sol metinlerini tersine çevir
-    if (stepItem.step == LivenessDetectionStep.lookRight) {
-      return "Sola bakın";
-    } else if (stepItem.step == LivenessDetectionStep.lookLeft) {
-      return "Sağa bakın";
+    if (widget.isBackCamera) {
+      if (stepItem.step == LivenessDetectionStep.lookRight) {
+        return "Sola bakın"; // Sağa bak adımında "Sola bakın" göster
+      } else if (stepItem.step == LivenessDetectionStep.lookLeft) {
+        return "Sağa bakın"; // Sola bak adımında "Sağa bakın" göster
+      }
     }
 
+    // Ön kamera için normal metinleri göster
     return stepItem.title;
   }
 
