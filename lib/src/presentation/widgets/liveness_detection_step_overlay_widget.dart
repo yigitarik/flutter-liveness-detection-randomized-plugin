@@ -201,7 +201,7 @@ class LivenessDetectionStepOverlayWidgetState
         color: Colors.transparent,
         child: Stack(
           children: [
-            // Top bar with back button, timer, and camera switch
+            // Top bar with back button and timer
             Positioned(
               top: 0,
               left: 0,
