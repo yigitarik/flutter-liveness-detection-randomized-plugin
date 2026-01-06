@@ -55,8 +55,6 @@ class LivenessDetectionStepOverlayWidgetState
     return 100 / stepLength;
   }
 
-  String get stepCounter => "$_currentIndex/${widget.steps.length}";
-
   @override
   void initState() {
     super.initState();
@@ -194,79 +192,45 @@ class LivenessDetectionStepOverlayWidgetState
         color: Colors.transparent,
         child: Stack(
           children: [
-            // Top bar with back button, timer, step counter, and camera switch
+            // Top bar with back button, timer, and camera switch
             Positioned(
               top: 0,
               left: 0,
               right: 0,
-              child: widget.showCurrentStep
-                  ? Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        GestureDetector(
-                          onTap: () => Navigator.pop(context),
-                          child: Text(
-                            'Geri',
-                            style: TextStyle(
-                              color: widget.isDarkMode
-                                  ? Colors.white
-                                  : Colors.black,
-                            ),
-                          ),
-                        ),
-                        Visibility(
-                          replacement: const SizedBox.shrink(),
-                          visible: widget.showDurationUiText,
-                          child: Text(
-                            _getRemainingTimeText(_remainingDuration),
-                            style: TextStyle(
-                              color: widget.isDarkMode
-                                  ? Colors.white
-                                  : Colors.black,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                        if (widget.onSwitchCamera != null)
-                          IconButton(
-                            icon: Icon(
-                              Icons.flip_camera_ios,
-                              color: widget.isDarkMode
-                                  ? Colors.white
-                                  : Colors.black,
-                            ),
-                            onPressed: widget.onSwitchCamera,
-                            tooltip: 'Kamerayı Çevir',
-                          ),
-                      ],
-                    )
-                  : Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        GestureDetector(
-                          onTap: () => Navigator.pop(context),
-                          child: Text(
-                            'Geri',
-                            style: TextStyle(
-                              color: widget.isDarkMode
-                                  ? Colors.white
-                                  : Colors.black,
-                            ),
-                          ),
-                        ),
-                        if (widget.onSwitchCamera != null)
-                          IconButton(
-                            icon: Icon(
-                              Icons.flip_camera_ios,
-                              color: widget.isDarkMode
-                                  ? Colors.white
-                                  : Colors.black,
-                            ),
-                            onPressed: widget.onSwitchCamera,
-                            tooltip: 'Kamerayı Çevir',
-                          ),
-                      ],
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  GestureDetector(
+                    onTap: () => Navigator.pop(context),
+                    child: Text(
+                      'Geri',
+                      style: TextStyle(
+                        color: widget.isDarkMode ? Colors.white : Colors.black,
+                      ),
                     ),
+                  ),
+                  Visibility(
+                    replacement: const SizedBox.shrink(),
+                    visible: widget.showDurationUiText,
+                    child: Text(
+                      _getRemainingTimeText(_remainingDuration),
+                      style: TextStyle(
+                        color: widget.isDarkMode ? Colors.white : Colors.black,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  if (widget.onSwitchCamera != null)
+                    IconButton(
+                      icon: Icon(
+                        Icons.flip_camera_ios,
+                        color: widget.isDarkMode ? Colors.white : Colors.black,
+                      ),
+                      onPressed: widget.onSwitchCamera,
+                      tooltip: 'Kamerayı Çevir',
+                    ),
+                ],
+              ),
             ),
             _buildBody(),
           ],

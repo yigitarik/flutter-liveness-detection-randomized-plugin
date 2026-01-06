@@ -129,16 +129,6 @@ class _LivenessDetectionScreenState extends State<LivenessDetectionView> {
   ) {
     List<LivenessDetectionStepItem> customizedSteps = [];
 
-    // Add blink step if not explicitly skipped (empty string skips)
-    if (label.blink != "") {
-      customizedSteps.add(
-        LivenessDetectionStepItem(
-          step: LivenessDetectionStep.blink,
-          title: label.blink ?? "Gözlerinizi 2-3 kez kırpın",
-        ),
-      );
-    }
-
     // Add lookRight step if not explicitly skipped
     if (label.lookRight != "") {
       customizedSteps.add(
@@ -159,35 +149,17 @@ class _LivenessDetectionScreenState extends State<LivenessDetectionView> {
       );
     }
 
-    // Add lookUp step if not explicitly skipped
-    if (label.lookUp != "") {
+    // Add blink step if not explicitly skipped (empty string skips)
+    if (label.blink != "") {
       customizedSteps.add(
         LivenessDetectionStepItem(
-          step: LivenessDetectionStep.lookUp,
-          title: label.lookUp ?? "Yukarı bakın",
+          step: LivenessDetectionStep.blink,
+          title: label.blink ?? "Gözlerinizi 2-3 kez kırpın",
         ),
       );
     }
 
-    // Add lookDown step if not explicitly skipped
-    if (label.lookDown != "") {
-      customizedSteps.add(
-        LivenessDetectionStepItem(
-          step: LivenessDetectionStep.lookDown,
-          title: label.lookDown ?? "Aşağı bakın",
-        ),
-      );
-    }
-
-    // Add smile step if not explicitly skipped
-    if (label.smile != "") {
-      customizedSteps.add(
-        LivenessDetectionStepItem(
-          step: LivenessDetectionStep.smile,
-          title: label.smile ?? "Gülümseyin",
-        ),
-      );
-    }
+    // Diğer adımlar (lookUp, lookDown, smile) artık varsayılan olarak eklenmiyor
 
     return customizedSteps;
   }
