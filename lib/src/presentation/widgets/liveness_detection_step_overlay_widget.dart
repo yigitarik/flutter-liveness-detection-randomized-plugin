@@ -13,7 +13,6 @@ class LivenessDetectionStepOverlayWidget extends StatefulWidget {
   final bool isDarkMode;
   final bool showDurationUiText;
   final int? duration;
-  final VoidCallback? onSwitchCamera;
   final bool isBackCamera;
 
   const LivenessDetectionStepOverlayWidget({
@@ -27,7 +26,6 @@ class LivenessDetectionStepOverlayWidget extends StatefulWidget {
     this.isDarkMode = true,
     this.showDurationUiText = false,
     this.duration,
-    this.onSwitchCamera,
     this.isBackCamera = false,
   });
 
@@ -231,15 +229,6 @@ class LivenessDetectionStepOverlayWidgetState
                       ),
                     ),
                   ),
-                  if (widget.onSwitchCamera != null)
-                    IconButton(
-                      icon: Icon(
-                        Icons.flip_camera_ios,
-                        color: widget.isDarkMode ? Colors.white : Colors.black,
-                      ),
-                      onPressed: widget.onSwitchCamera,
-                      tooltip: 'Kamerayı Çevir',
-                    ),
                 ],
               ),
             ),
