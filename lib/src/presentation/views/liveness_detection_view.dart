@@ -281,6 +281,11 @@ class _LivenessDetectionScreenState extends State<LivenessDetectionView> {
     // Yeni kamera index'ini ayarla
     _cameraIndex = targetCameraIndex;
 
+    // Widget'ın yeniden render edilmesi için setState
+    if (mounted) {
+      setState(() {});
+    }
+
     // Adımları sıfırla (kamera yönü değiştiği için metinler güncellenecek)
     _resetSteps();
 
@@ -511,21 +516,7 @@ class _LivenessDetectionScreenState extends State<LivenessDetectionView> {
   }
 
   /// Helper method to get the shuffled steps list
-  /// Arka kamera kullanıldığında sağ/sol metinlerini tersine çevir
   List<LivenessDetectionStepItem> _getStepsToUse() {
-    // Arka kamera kontrolü
-    if (_cameraIndex < availableCams.length &&
-        availableCams[_cameraIndex].lensDirection == CameraLensDirection.back) {
-      // Arka kamera için sağ/sol metinlerini tersine çevir
-      return _shuffledSteps.map((step) {
-        if (step.step == LivenessDetectionStep.lookRight) {
-          return step.copyWith(title: "Sola bakın");
-        } else if (step.step == LivenessDetectionStep.lookLeft) {
-          return step.copyWith(title: "Sağa bakın");
-        }
-        return step;
-      }).toList();
-    }
     return _shuffledSteps;
   }
 
@@ -582,6 +573,10 @@ class _LivenessDetectionScreenState extends State<LivenessDetectionView> {
             () => _takePicture(),
           ),
           onSwitchCamera: _switchCamera,
+          isBackCamera:
+              _cameraIndex < availableCams.length &&
+              availableCams[_cameraIndex].lensDirection ==
+                  CameraLensDirection.back,
         ),
       ],
     );

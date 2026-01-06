@@ -14,6 +14,7 @@ class LivenessDetectionStepOverlayWidget extends StatefulWidget {
   final bool showDurationUiText;
   final int? duration;
   final VoidCallback? onSwitchCamera;
+  final bool isBackCamera;
 
   const LivenessDetectionStepOverlayWidget({
     super.key,
@@ -27,6 +28,7 @@ class LivenessDetectionStepOverlayWidget extends StatefulWidget {
     this.showDurationUiText = false,
     this.duration,
     this.onSwitchCamera,
+    this.isBackCamera = false,
   });
 
   @override
@@ -332,6 +334,21 @@ class LivenessDetectionStepOverlayWidgetState
     );
   }
 
+  String _getStepTitle(LivenessDetectionStepItem stepItem) {
+    if (!widget.isBackCamera) {
+      return stepItem.title;
+    }
+
+    // Arka kamera için sağ/sol metinlerini tersine çevir
+    if (stepItem.step == LivenessDetectionStep.lookRight) {
+      return "Sola bakın";
+    } else if (stepItem.step == LivenessDetectionStep.lookLeft) {
+      return "Sağa bakın";
+    }
+
+    return stepItem.title;
+  }
+
   Widget _buildStepItem(BuildContext context, int index) {
     return Padding(
       padding: const EdgeInsets.all(10),
@@ -344,7 +361,7 @@ class LivenessDetectionStepOverlayWidgetState
         margin: const EdgeInsets.symmetric(horizontal: 30),
         padding: const EdgeInsets.all(10),
         child: Text(
-          widget.steps[index].title,
+          _getStepTitle(widget.steps[index]),
           textAlign: TextAlign.center,
           style: TextStyle(
             color: widget.isDarkMode ? Colors.white : Colors.black,
