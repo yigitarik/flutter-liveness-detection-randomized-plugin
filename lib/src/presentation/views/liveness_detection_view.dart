@@ -280,11 +280,14 @@ class _LivenessDetectionScreenState extends State<LivenessDetectionView> {
       });
     }
     
-    // Adımları sıfırla
-    _resetSteps();
-    
     // Yeni kamera index'ini ayarla
     _cameraIndex = targetCameraIndex;
+    
+    // Kamera yönü değiştiği için adımları yeniden oluştur
+    _initializeShuffledSteps();
+    
+    // Adımları sıfırla
+    _resetSteps();
     
     // Yeni kamerayı başlat
     _startLiveFeed();
@@ -361,6 +364,8 @@ class _LivenessDetectionScreenState extends State<LivenessDetectionView> {
         final currentIndex = _stepsKey.currentState?.currentIndex ?? 0;
         List<LivenessDetectionStepItem> currentSteps = _getStepsToUse();
         if (currentIndex < currentSteps.length) {
+          // _getStepsToUse zaten arka kamera için adımları tersine çeviriyor
+          // Bu yüzden doğrudan step'i kullanabiliriz
           _detectFace(
             face: faces.first,
             step: currentSteps[currentIndex].step,
@@ -512,9 +517,37 @@ class _LivenessDetectionScreenState extends State<LivenessDetectionView> {
     _shuffledSteps = baseSteps;
   }
 
+  /// Helper method to check if back camera is being used
+  bool _isBackCamera() {
+    if (_cameraIndex >= availableCams.length) return false;
+    return availableCams[_cameraIndex].lensDirection == CameraLensDirection.back;
+  }
+
+  /// Helper method to adjust steps based on camera direction
+  /// Arka kamera kullanıldığında: Gösterilen metin aynı kalır ama algılanacak yön tersine çevrilir
+  /// Örnek: Arka kamerada "Sağa bakın" gösterirken, kullanıcı kendi sağına bakacak (bizim solumuza)
+  /// Bu yüzden lookLeft algılamamız gerekiyor
+  List<LivenessDetectionStepItem> _adjustStepsForCamera(List<LivenessDetectionStepItem> steps) {
+    if (!_isBackCamera()) return steps;
+    
+    // Arka kamera için: Gösterilen metin aynı kalır ama algılanacak step tersine çevrilir
+    return steps.map((stepItem) {
+      if (stepItem.step == LivenessDetectionStep.lookRight) {
+        // "Sağa bakın" gösteriyoruz ama kullanıcı kendi sağına bakacak (bizim solumuza)
+        // Bu yüzden lookLeft algılamamız gerekiyor
+        return stepItem.copyWith(step: LivenessDetectionStep.lookLeft);
+      } else if (stepItem.step == LivenessDetectionStep.lookLeft) {
+        // "Sola bakın" gösteriyoruz ama kullanıcı kendi soluna bakacak (bizim sağımıza)
+        // Bu yüzden lookRight algılamamız gerekiyor
+        return stepItem.copyWith(step: LivenessDetectionStep.lookRight);
+      }
+      return stepItem;
+    }).toList();
+  }
+
   /// Helper method to get the shuffled steps list
   List<LivenessDetectionStepItem> _getStepsToUse() {
-    return _shuffledSteps;
+    return _adjustStepsForCamera(_shuffledSteps);
   }
 
   @override
