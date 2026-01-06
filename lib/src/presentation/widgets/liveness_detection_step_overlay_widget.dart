@@ -227,29 +227,17 @@ class LivenessDetectionStepOverlayWidgetState
                             ),
                           ),
                         ),
-                        Row(
-                          children: [
-                            if (widget.onSwitchCamera != null)
-                              IconButton(
-                                icon: Icon(
-                                  Icons.flip_camera_ios,
-                                  color: widget.isDarkMode
-                                      ? Colors.white
-                                      : Colors.black,
-                                ),
-                                onPressed: widget.onSwitchCamera,
-                                tooltip: 'Kamerayı Çevir',
-                              ),
-                            Text(
-                              stepCounter,
-                              style: TextStyle(
-                                color: widget.isDarkMode
-                                    ? Colors.white
-                                    : Colors.black,
-                              ),
+                        if (widget.onSwitchCamera != null)
+                          IconButton(
+                            icon: Icon(
+                              Icons.flip_camera_ios,
+                              color: widget.isDarkMode
+                                  ? Colors.white
+                                  : Colors.black,
                             ),
-                          ],
-                        ),
+                            onPressed: widget.onSwitchCamera,
+                            tooltip: 'Kamerayı Çevir',
+                          ),
                       ],
                     )
                   : Row(
