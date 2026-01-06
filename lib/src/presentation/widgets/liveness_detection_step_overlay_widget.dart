@@ -358,6 +358,13 @@ class LivenessDetectionStepOverlayWidgetState
   }
 
   Widget _buildStepItem(BuildContext context, int index) {
+    final stepItem = widget.steps[index];
+    final displayTitle = _getStepTitle(stepItem);
+
+    debugPrint(
+      '🎥 Building step - isBackCamera: ${widget.isBackCamera}, step: ${stepItem.step}, title: $displayTitle',
+    );
+
     return Padding(
       padding: const EdgeInsets.all(10),
       child: Container(
@@ -369,7 +376,7 @@ class LivenessDetectionStepOverlayWidgetState
         margin: const EdgeInsets.symmetric(horizontal: 30),
         padding: const EdgeInsets.all(10),
         child: Text(
-          _getStepTitle(widget.steps[index]),
+          displayTitle, // _getStepTitle kullan
           textAlign: TextAlign.center,
           style: TextStyle(
             color: widget.isDarkMode ? Colors.white : Colors.black,
