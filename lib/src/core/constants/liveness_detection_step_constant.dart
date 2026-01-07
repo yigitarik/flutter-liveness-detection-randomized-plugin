@@ -11,6 +11,6 @@ List<LivenessDetectionStepItem> stepLiveness = [
   ),
   LivenessDetectionStepItem(
     step: LivenessDetectionStep.blink,
-    title: "Göz kırpın",
+    title: "Gözlerinizi kırpın",
   ),
 ];
