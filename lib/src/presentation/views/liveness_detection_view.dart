@@ -141,7 +141,7 @@ class _LivenessDetectionScreenState extends State<LivenessDetectionView> {
       customizedSteps.add(
         LivenessDetectionStepItem(
           step: LivenessDetectionStep.lookRight,
-          title: label.lookRight ?? "Sağa bakın",
+          title: label.lookRight ?? "Kafanızı hafifçe sağa çevirin",
         ),
       );
     }
@@ -151,7 +151,7 @@ class _LivenessDetectionScreenState extends State<LivenessDetectionView> {
       customizedSteps.add(
         LivenessDetectionStepItem(
           step: LivenessDetectionStep.lookLeft,
-          title: label.lookLeft ?? "Sola bakın",
+          title: label.lookLeft ?? "Kafanızı hafifçe sola çevirin",
         ),
       );
     }
