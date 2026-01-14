@@ -350,17 +350,13 @@ class LivenessDetectionStepOverlayWidgetState
         alignment: Alignment.center,
         margin: const EdgeInsets.symmetric(horizontal: 30),
         padding: const EdgeInsets.all(10),
-        child: FittedBox(
-          fit: BoxFit.scaleDown,
-          child: Text(
-            widget.steps[index].title,
-            textAlign: TextAlign.center,
-            maxLines: 1,
-            style: TextStyle(
-              color: widget.isDarkMode ? Colors.white : Colors.black,
-              fontSize: 24,
-              fontWeight: FontWeight.w500,
-            ),
+        child: Text(
+          widget.steps[index].title,
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            color: widget.isDarkMode ? Colors.white : Colors.black,
+            fontSize: 24,
+            fontWeight: FontWeight.w500,
           ),
         ),
       ),
