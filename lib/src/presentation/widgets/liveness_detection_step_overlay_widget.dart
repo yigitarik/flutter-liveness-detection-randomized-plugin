@@ -244,23 +244,26 @@ class LivenessDetectionStepOverlayWidgetState
   }
 
   Widget _buildBody() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisSize: MainAxisSize.max,
-      children: [
-        _buildCircularCamera(),
-        const SizedBox(height: 16),
-        _buildFaceDetectionStatus(),
-        // const SizedBox(height: 16),
-        Visibility(
-          visible: _pageViewVisible,
-          replacement: const CircularProgressIndicator.adaptive(),
-          child: _buildStepPageView(),
-        ),
-        const SizedBox(height: 16),
-        widget.isDarkMode ? _buildLoaderDarkMode() : _buildLoaderLightMode(),
-      ],
+    return Container(
+      height: MediaQuery.of(context).size.height,
+      width: MediaQuery.of(context).size.width,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          _buildCircularCamera(),
+          const SizedBox(height: 16),
+          _buildFaceDetectionStatus(),
+          // const SizedBox(height: 16),
+          Visibility(
+            visible: _pageViewVisible,
+            replacement: const CircularProgressIndicator.adaptive(),
+            child: _buildStepPageView(),
+          ),
+          const SizedBox(height: 16),
+          widget.isDarkMode ? _buildLoaderDarkMode() : _buildLoaderLightMode(),
+        ],
+      ),
     );
   }
 
