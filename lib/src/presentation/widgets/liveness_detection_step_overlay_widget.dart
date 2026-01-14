@@ -326,7 +326,7 @@ class LivenessDetectionStepOverlayWidgetState
 
   Widget _buildStepPageView() {
     return SizedBox(
-      height: MediaQuery.of(context).size.height / 10,
+      height: MediaQuery.of(context).size.height / 5,
       width: MediaQuery.of(context).size.width,
       child: AbsorbPointer(
         absorbing: true,
@@ -350,13 +350,17 @@ class LivenessDetectionStepOverlayWidgetState
         alignment: Alignment.center,
         margin: const EdgeInsets.symmetric(horizontal: 30),
         padding: const EdgeInsets.all(10),
-        child: Text(
-          widget.steps[index].title,
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            color: widget.isDarkMode ? Colors.white : Colors.black,
-            fontSize: 24,
-            fontWeight: FontWeight.w500,
+        child: FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Text(
+            widget.steps[index].title,
+            textAlign: TextAlign.center,
+            maxLines: 1,
+            style: TextStyle(
+              color: widget.isDarkMode ? Colors.white : Colors.black,
+              fontSize: 24,
+              fontWeight: FontWeight.w500,
+            ),
           ),
         ),
       ),
