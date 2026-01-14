@@ -112,9 +112,7 @@ class LivenessDetectionStepOverlayWidgetState
       maxStep: _indicatorMaxStep,
       child: Transform.scale(
         scale: scale,
-        child: Center(
-          child: widget.camera,
-        ),
+        child: Center(child: widget.camera),
       ),
     );
   }
@@ -203,9 +201,10 @@ class LivenessDetectionStepOverlayWidgetState
                         Text(
                           'Geri',
                           style: TextStyle(
-                              color: widget.isDarkMode
-                                  ? Colors.white
-                                  : Colors.black),
+                            color: widget.isDarkMode
+                                ? Colors.white
+                                : Colors.black,
+                          ),
                         ),
                         Visibility(
                           replacement: const SizedBox.shrink(),
@@ -223,16 +222,19 @@ class LivenessDetectionStepOverlayWidgetState
                         Text(
                           stepCounter,
                           style: TextStyle(
-                              color: widget.isDarkMode
-                                  ? Colors.white
-                                  : Colors.black),
-                        )
+                            color: widget.isDarkMode
+                                ? Colors.white
+                                : Colors.black,
+                          ),
+                        ),
                       ],
                     )
-                  : Text('Geri',
+                  : Text(
+                      'Geri',
                       style: TextStyle(
-                          color:
-                              widget.isDarkMode ? Colors.white : Colors.black)),
+                        color: widget.isDarkMode ? Colors.white : Colors.black,
+                      ),
+                    ),
             ),
             _buildBody(),
           ],
@@ -250,7 +252,7 @@ class LivenessDetectionStepOverlayWidgetState
         _buildCircularCamera(),
         const SizedBox(height: 16),
         _buildFaceDetectionStatus(),
-        const SizedBox(height: 16),
+        // const SizedBox(height: 16),
         Visibility(
           visible: _pageViewVisible,
           replacement: const CircularProgressIndicator.adaptive(),
@@ -294,21 +296,26 @@ class LivenessDetectionStepOverlayWidgetState
                 )
               : ColorFiltered(
                   colorFilter: ColorFilter.mode(
-                      widget.isFaceDetected ? Colors.green : Colors.black,
-                      BlendMode.modulate),
+                    widget.isFaceDetected ? Colors.green : Colors.black,
+                    BlendMode.modulate,
+                  ),
                   child: LottieBuilder.asset(
                     widget.isFaceDetected
                         ? 'packages/flutter_liveness_detection_randomized_plugin/src/core/assets/face-detected.json'
                         : 'packages/flutter_liveness_detection_randomized_plugin/src/core/assets/face-id-anim.json',
                     height: widget.isFaceDetected ? 32 : 22,
                     width: widget.isFaceDetected ? 32 : 22,
-                  )),
+                  ),
+                ),
         ),
         const SizedBox(width: 16),
         Text(
-          widget.isFaceDetected ? 'Kullanıcı yüzü bulundu' : 'Kullanıcı yüzü bulunamadı...',
-          style:
-              TextStyle(color: widget.isDarkMode ? Colors.white : Colors.black),
+          widget.isFaceDetected
+              ? 'Kullanıcı yüzü bulundu'
+              : 'Kullanıcı yüzü bulunamadı...',
+          style: TextStyle(
+            color: widget.isDarkMode ? Colors.white : Colors.black,
+          ),
         ),
       ],
     );
