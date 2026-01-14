@@ -3,11 +3,11 @@ import 'package:flutter_liveness_detection_randomized_plugin/index.dart';
 List<LivenessDetectionStepItem> stepLiveness = [
   LivenessDetectionStepItem(
     step: LivenessDetectionStep.lookRight,
-    title: "Sağa bakın",
+    title: "Kafanızı hafifçe sağa çevirin",
   ),
   LivenessDetectionStepItem(
     step: LivenessDetectionStep.lookLeft,
-    title: "Sola bakın",
+    title: "Kafanızı hafifçe sola çevirin",
   ),
   LivenessDetectionStepItem(
     step: LivenessDetectionStep.blink,
